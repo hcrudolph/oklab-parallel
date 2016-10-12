@@ -4,8 +4,6 @@
 \mode<presentation> {
     \usetheme{Frankfurt}
     \usecolortheme{whale}
-    %\setbeamertemplate{footline} % remove the footer line
-    %\setbeamertemplate{footline}[page number] % replace the footer line
     \setbeamertemplate{navigation symbols}{} % remove nav symbols
 }
 
@@ -24,9 +22,13 @@
 \usepackage{csquotes}
 \usepackage{relsize}
 
+% make 'u.a.' 'et al.'
+\DefineBibliographyStrings{ngerman}{
+    andothers = {{et\,al\adddot}},
+}
+
 \graphicspath {{figures/}}
 
-%c from texinfo.tex
 \def\ifmonospace{\ifdim\fontdimen3\font=0pt }
 
 % prettier C++ formatting
@@ -49,6 +51,7 @@
     Hochschule für Telekommunikation Leipzig\\
     \medskip
     \textit{hans-christian.rudolph@hft-leipzig.de}\\
+    \smallskip
     \textit{@hcrudolph}
 }
 \date{12. Oktober 2016}
@@ -59,46 +62,45 @@
     \titlepage
 \end{frame}
 
+\begin{frame}[plain]{}
+\begin{figure}
+\centering
+    \huge{
+        \href{https://github.com/hcrudolph/oklab-parallel}{github.com/hcrudolph/oklab-parallel}
+    }
+\end{figure}
+\end{frame}
+
 \begin{frame}
     \frametitle{Gliederung}
     \tableofcontents
 \end{frame}
 
 %------------------------------------------------
-%    PRESENTATION SLIDES
+%    BEGIN SLIDES
 %-----------------------------------------------
 
 %------------------------------------------------
-\section{Einleitung}
+\section{Motivation}
 \setcounter{subsection}{1}
-%------------------------------------------------
-
-\begin{frame}[plain]{}
-    \footnotesize{
-    Warum sollten sich Programmierende mit den Konzepten funktionaler Sprachen auseinandersetzen? Schließlich existiert eine Vielzahl von Alternativen, die einfacher zu erlernen sind, eine deutlich größere Ver- breitung genießen und mehr Community-Unterstützung erfahren.
-    Die Antwort ist denkbar einfach: weil die grundverschiedenen Herangehensweisen dieses Paradigmas den Horizont erweitern und neue, effiziente Lösungswege zu bestehenden Problemen offenbaren können.
-    Wer sich mit einer dieser Programmiersprachen befasst hat, wird das Gelernte auch auf andere Bereiche transferieren und so zu expressivem, sicherem und leicht wartbarem Quellcode beitragen.
-    Diese Erkenntnis ist auch an etablierten Sprachen, wie \C++, C\# und Java, nicht spurlos vorbeigegangen.
-    Obgleich sich ein rein funktionales Vorgehen nicht für jeden Anwendungsfall eignet, ist hier der deutliche Trend zu beobachten, stetig mehr funktionale Komponenten zu integrieren -- ein erster Schritt in Richtung maximal modularer, zukunftsfähiger Softwareprojekte.
-}
-\end{frame}
-
 %------------------------------------------------
 
 \begin{frame}
 \frametitle{Funktional vs. Imperativ}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-\column{.5\textwidth} % Left column and width
+\begin{columns}[c]
+\column{.5\textwidth}
     \textbf{Haskell}
     \begin{itemize}
+    \setlength\itemsep{1em}
     \item Rein funktional
     \item Stark abstrahiert
     \item Referenzielle Transparenz
     \end{itemize}
 
-\column{.5\textwidth} % Right column and width
+\column{.5\textwidth}
     \textbf{\C++}
     \begin{itemize}
+    \setlength\itemsep{1em}
     \item Multiple Paradigmen
     \item (Wenn nötig) hardwarenah
     \item Zero-Cost Abstractions
@@ -106,16 +108,12 @@
 \end{columns}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}[plain]{}
 \begin{figure}
 \centering
 \includegraphics[height=.7\textheight]{parallel}
 \end{figure}
 \end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
     \centering
@@ -125,16 +123,12 @@
     }
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}[plain]{}
 \begin{figure}
 \centering
 \includegraphics[height=.7\textheight]{sad}
 \end{figure}
 \end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
 \frametitle{Begriffserklärung}
@@ -160,8 +154,6 @@
 
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}
 \frametitle{Szenario}
 \begin{itemize}
@@ -169,41 +161,10 @@
 \item Aggregationsfunktion
 \item Lokal gespeicherte Textdateien
 \item Schlüsselfelder
-% \begin{itemize}
-%     \item[$-$] \texttt{AggregationsDatum}
-%     \item[$-$] \texttt{Eventklasse}
-%     \item[$-$] \texttt{Eventsource}
-%     \item[$-$] \texttt{Plattform}
-%     \item[$-$] \texttt{Tarifzone}
-% \end{itemize}
-\item Aggregationsfelder \texttt{Dauer} und \texttt{Volumen}
-% \begin{itemize}
-%     \item[$-$]
-%     \item[$-$] \texttt{Volumen}
-% \end{itemize}
+\item Aggregationsfelder
 \item Summiere die Aggregationsfelder für jeden distinkten Schlüssel
 \end{itemize}
 \end{frame}
-
-%------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Multiple Columns}
-% \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-% \column{.45\textwidth} % Left column and width
-% \textbf{Heading}
-% \begin{enumerate}
-% \item Statement
-% \item Explanation
-% \item Example
-% \end{enumerate}
-
-% \column{.5\textwidth} % Right column and width
-% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-% \end{columns}
-% \end{frame}
 
 %------------------------------------------------
 \section[MapReduce]{Das MapReduce Programmiermodell}
@@ -227,8 +188,6 @@
     \end{itemize}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}[fragile]
 \frametitle{Map Funktional}
     \begin{block}{Definition}
@@ -243,12 +202,11 @@
     \end{block}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}[fragile]
 \frametitle{Reduce/Fold Funktional}
     \begin{block}{Definition}
         Das Funktional Reduce/Fold wendet eine binäre Funktion auf jedes Element einer Sequenz an.
+        Eingangsparameter sind ein definierter Start-Wert, Akkumulator genannt, und das jeweilige Element.
     \end{block}
 
     \begin{block}{Beispiel}
@@ -258,80 +216,38 @@
     -- foldl (+) 0             [1,2,3] = ...
     -- foldl (+) (0+1)         [2,3]   = ...
     -- foldl (+) ((0+1)+2)     [3]     = ...
-    -- foldl (+) (((0+1)+2)+3) [1,2,3] = 6
+    -- foldl (+) (((0+1)+2)+3) []      = 6
     \end{lstlisting}
     \end{block}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}
-\frametitle{Logische Struktur}
+\frametitle{Logische Struktur I}
 \begin{figure}
 \centering
 \includegraphics[height=.7\textheight]{mapred.pdf}
 \end{figure}
 \end{frame}
 
-%------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Table}
-% \begin{table}
-% \begin{tabular}{l l l}
-% \toprule
-% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-% \midrule
-% Treatment 1 & 0.0003262 & 0.562 \\
-% Treatment 2 & 0.0015681 & 0.910 \\
-% Treatment 3 & 0.0009271 & 0.296 \\
-% \bottomrule
-% \end{tabular}
-% \caption{Table caption}
-% \end{table}
-% \end{frame}
+\begin{frame}
+\frametitle{Logische Struktur II}
+\begin{figure}
+\centering
+\includegraphics[height=.7\textheight]{mapred_groups.pdf}
+\end{figure}
+\end{frame}
 
 %------------------------------------------------
 
-% \begin{frame}
-% \frametitle{Theorem}
-% \begin{theorem}[Mass--energy equivalence]
-% $E = mc^2$
-% \end{theorem}
-% \end{frame}
-
-%------------------------------------------------
-
-% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-% \frametitle{Verbatim}
-% \begin{example}[Theorem Slide Code]
-% \begin{verbatim}
-% \begin{frame}
-% \frametitle{Theorem}
-% \begin{theorem}[Mass--energy equivalence]
-% $E = mc^2$
-% \end{theorem}
-% \end{frame}\end{verbatim}
-% \end{example}
-% \end{frame}
-
-%------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Figure}
-% \begin{figure}
-% \includegraphics[height=.8\textheight]{speedup_desktop.pdf}
-% \end{figure}
-% \end{frame}
-
-%------------------------------------------------
-
-% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-% \frametitle{Citation}
-% An example of the \verb|\cite| command to cite within the presentation:\\~
-
-% This statement requires citation \cite{p1}.
-% \end{frame}
+\begin{frame}
+\frametitle{Funktionsblöcke}
+    \begin{enumerate}
+    \setlength\itemsep{1em}
+    \item \textbf{Map}    = Parsen der Textdateien
+    \item \textbf{Group}  = Sortieren der Datenstrukturen nach Schlüssel
+    \item \textbf{Reduce} = Summieren der Aggregationsfelder
+    \end{enumerate}
+\end{frame}
 
 %------------------------------------------------
 \section{Parallelrechner}
@@ -353,13 +269,6 @@
     \item Multiple Instruction Stream--Multiple Data Stream (MIMD)
     \end{itemize}
 \end{frame}
-
-% \begin{frame}
-% \frametitle{Datenparallelismus}
-%     \begin{block}{Definition}
-%     Die gleichzeitige Anwendung der selben Funktion auf eine Menge von Daten wird auch Datenparallelismus genannt.
-%     \end{block}
-% \end{frame}
 
 \begin{frame}
 \frametitle{Speicheraufbau}
@@ -394,6 +303,225 @@
     bereichs benötigt, so müssen diese explizit durch Nachrichten angefordert und anschließend übertragen werden.
     \end{block}
 }
+\end{frame}
+
+%------------------------------------------------
+\section[Parallelisierung]{Möglichkeiten der Parallelisierung}
+
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+%------------------------------------------------
+
+\setcounter{subsection}{1}
+\subsection{Haskell}
+
+\begin{frame}
+\frametitle{Die Haskell Laufzeitumgebung}
+\onslide<2->{
+    \begin{block}{Bedarfsauswertung}
+    Bedarfsauswertung (engl.: \textit{lazy evaluation}) bezeichnet eine Evaluationsstrategie, bei der die Argumente einer Funktion erst dann ausgewertet werden, wenn sie tatsächlich benötigt werden.
+    \end{block}
+}
+
+\onslide<3->{
+    \begin{block}{Thunk}
+    Ein Thunk ist eine unevaluierte Berechnungseinheit innerhalb eines Haskell Programms.
+    \end{block}
+}
+\end{frame}
+
+\begin{frame}[plain]{}
+\begin{figure}
+\centering
+\includegraphics[height=.8\textheight]{sparks}
+    \caption{Don Stewart (\href{https://stackoverflow.com/questions/958449/what-is-a-spark-in-haskell}{$\rightarrow$ Stackoverflow-Link})}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallele Kombinatoren I}
+    \citeauthor{trinder1998algorithm} (\citeyear{trinder1998algorithm}) definiert folgende zwei Kombinatoren:
+    \begin{itemize}
+    \setlength\itemsep{1em}
+        \onslide<1->{
+            \item {\color{blue}\texttt{x `par` y}} kreiert einen potentiell parallelen Thunk (=Spark) für das Argument \texttt{x} und gibt anschließend \texttt{y} zurück
+            \item {\color{blue}\texttt{x `pseq` y}} sorgt für die Auswertung von \texttt{x} bevor \texttt{y} zurückgegeben wird
+        }
+        \onslide<2->{
+            \item[$\rightarrow$] {\color{blue}\texttt{x `par` y `pseq` f x y }}
+        }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallele Kombinatoren II}
+    \citeauthor{marlow2010seq} (\citeyear{marlow2010seq}) definieren neue Formen dieser Kombinatoren:
+    \begin{itemize}
+        \item {\color{blue}\texttt{r0 x}} = führe keinerlei Evaluation von \texttt{x} aus
+        \item {\color{blue}\texttt{rpar x}} = generiere einen Spark für \texttt{x}
+        \item {\color{blue}\texttt{rseq x}} = evaluiere \texttt{x} bis zu seinem Konstruktor
+        \item {\color{blue}\texttt{rdeepseq x}} = evaluiere \texttt{x} vollständig
+    \end{itemize}
+    \bigskip
+    Diese Funktionen geben eine Version ihres Argumentes zurück,\\in der die \underline{Evaluationsstrategie eingebettet} ist.
+\end{frame}
+
+\begin{frame}[plain]{}
+\begin{figure}
+\centering
+\includegraphics[height=.7\textheight]{but_why}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Typspezifische Strategien}
+    \begin{lstlisting}[language=haskell]
+    evalList :: Strategy a -> Strategy [a]
+    evalList s []     = return []
+    evalList s (x:xs) = do x' <- s x
+                        xs'   <- evalList s xs
+                        return (x':xs')
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Algorithmus + Strategie}
+    \begin{lstlisting}[language=haskell,otherkeywords={using}]
+    map f [1,2,...] `using` (evalList rpar)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluationsstrategien}
+    \begin{itemize}
+        \item[+] Separation von Algorithmus und Strategie
+        \item[+] Typspezifische Strategien
+        \item[$\sim$] Nur geeignet für ,,lazy'' Datenstrukturen
+        \item[--] Hoher Komplexitätsgrad
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Par Monade}
+    \begin{itemize}
+    \item Explizite Erstellung paralleler Kontrollflüsse, ähnlich Kindprozessen
+    \item Synchronisation und Datenaustausch über \texttt{IVars} ($\sim$ Futures)
+    \item Grundlegende Funktionen:
+        \begin{itemize}
+            \item \texttt{fork :: Par () -> Par ()}
+            \item \texttt{put  :: NFData a => IVar a -> a -> Par ()}
+            \item \texttt{get  :: IVar a -> Par a}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Par Monade}
+    \begin{itemize}
+        \item[+] Explizite Kontrolle über Parallelität
+        \item[$\sim$] Vorrangig für Strukturen der Typklasse \texttt{NFData} gedacht
+    \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{C++}
+
+\begin{frame}
+\frametitle{Manuelle Parallelisierung I}
+    \onslide<2->{
+        \textbf{POSIX-Threads (PThreads)}
+        \begin{itemize}
+            \item IEEE POSIX 1003.1c standard (1995)
+            \item Implementierung des Threadmodells für POSIX-Systeme
+            \item Prozeduren enthalten in Headerdatei \texttt{pthread.h}
+        \end{itemize}
+    }
+
+    \vfill
+
+    \onslide<3->{
+        \textbf{std::threads}
+        \begin{itemize}
+            \item Moderene Alternative (seit \C++11) in Form einer Standardbibliothek
+            \item Synchronisation z.B. mittels \texttt{std::mutex} Komponenten
+        \end{itemize}
+    }
+\end{frame}
+
+\begin{frame}
+\frametitle{Manuelle Parallelisierung II}
+    \begin{itemize}
+        \item[+] Größtmögliche Flexibilität
+        \item[--] \textbf{Aufwending}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallele APIs I}
+    \textbf{Open Multiprocessing (OpenMP)}
+    \begin{itemize}
+        \item Seit 1997 in Zusammenarbeit mehrerer namhafter Hardware- und Compilerhersteller entwickelt
+        \item ,,[M]it dem Ziel [\dots], einen einheitlichen Standard für die Programmierung von Parallelrechnern mit gemeinsamen Adressraum zur Verfügung zu stellen'' (\cite{rauber2012parallele}, S.357)
+        \item Pragma-Anweisungen, die für andere Compiler aussehen, wie Kommentare
+        \item Vorrangig für Loop-Level Parallelisierung eingesetzt
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Parallel for}
+    \begin{lstlisting}[language=c,otherkeywords={pragma,for,parallel,omp}]
+    #pragma omp parallel for
+    for (i = 0; i < 10; ++i) {
+        /* ... */
+    }
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallele APIs II}
+    \begin{itemize}
+        \item[+] Einfach und intuitiv
+        \item[--] Weniger flexibel (Loop-Level, parallele Regionen)
+        \bigskip
+        \item Auch interessant:
+            \begin{itemize}
+            \item Intel Threading Building Blocks (TBB)
+            \item Open Accelerator (OpenACC)
+            \item Open Message Passing Interface (OpenMPI)
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parallele Standardbibliotheken}
+    \begin{itemize}
+        \item Parallelität in vielen Funktionalen ist offensichtlich!
+        \item \citeauthor{singler2007mcstl} (\citeyear{singler2007mcstl}, S.1) bezeichnen sie als ,,Embarrassingly parallel''
+        \item Entwickelten parallele Versionen einiger Standardfunktionen
+        \item Inklusive dynamischer Lastverteilung
+        \item Basierend auf OpenMP
+        \item Namespace \texttt{std::\_\_parallel}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{lstlisting}[language=c]
+    # include <parallel/algorithm>
+    # include <parallel/numeric>
+    namespace par = std::__parallel;
+
+    par::transform( ... );  /* Map    */
+    par::accumulate( ... ); /* Reduce */
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]{}
+\begin{figure}
+\centering
+\includegraphics[height=.7\textheight]{suspiciously_easy}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
@@ -437,6 +565,8 @@
     \end{block}
 \end{frame}
 
+%------------------------------------------------
+
 \subsection{Parallele Leistungskriterien}
 
 \begin{frame}
@@ -473,134 +603,163 @@
 \end{frame}
 
 %------------------------------------------------
-\section[Parallelisierung]{Möglichkeiten der Parallelisierung}
-
-\begin{frame}
-\tableofcontents[currentsection]
-\end{frame}
-%------------------------------------------------
-
-\setcounter{subsection}{1}
-\subsection{Haskell}
-
-\begin{frame}
-\frametitle{Die Haskell Laufzeitumgebung}
-\onslide<2->{
-    \begin{block}{Bedarfsauswertung}
-    Bedarfsauswertung (engl.: \textit{lazy evaluation}) bezeichnet eine Evaluationsstrategie, bei der die Argumente einer Funktion erst dann ausgewertet werden, wenn sie tatsächlich benötigt werden.
-    \end{block}
-}
-
-\onslide<3->{
-    \begin{block}{Thunk}
-    Ein Thunk ist eine unevaluierte Berechnungseinheit innerhalb eines Haskell Programms.
-    \end{block}
-}
-\end{frame}
-
-\begin{frame}[plain]{}
-\begin{figure}
-\centering
-\includegraphics[height=.8\textheight]{sparks}
-    \caption{Don Stewart (\href{https://stackoverflow.com/questions/958449/what-is-a-spark-in-haskell}{$\rightarrow$ Stackoverflow-Link})}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Manuelle Parallelisierung}
-    \begin{itemize}
-    \item {\color{blue}\texttt{rpar x}} generiert einen Spark für ihr Argument
-    \item {\color{blue}\texttt{rseq x y}} sorgt für die Auswertung von \texttt{x} bevor sie \texttt{y} zurückgibt
-    \item[$\rightarrow$] {\color{blue}\texttt{y rseq x $\cdot$ y}}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Manuelle Parallelisierung}
-    \begin{itemize}
-    \item Par Monade
-    \end{itemize}
-\end{frame}
-
-\subsection{\C++}
-
-\begin{frame}
-\frametitle{Manuelle Parallelisierung}
-    \onslide<2->{
-        \textbf{POSIX-Threads (PThreads)}
-        \begin{itemize}
-            \item Implementierung des Threadmodells für POSIX-Systeme
-            \item \dots
-        \end{itemize}
-    }
-
-    \vfill
-
-    \onslide<3->{
-        \textbf{std::threads}
-        \begin{itemize}
-            \item Moderene Alternative in Form einer \C++ Standardbibliothek
-            \item \dots
-        \end{itemize}
-    }
-\end{frame}
-
-\begin{frame}
-\frametitle{Parallele APIs}
-    \onslide<2->{
-        \textbf{Open Multiprocessing (OpenMP)}
-        \begin{itemize}
-            \item \dots
-        \end{itemize}
-    }
-
-    \vfill
-
-    \onslide<3->{
-        \textbf{Intel Threading Building Blocks (TBB)}
-        \begin{itemize}
-            \item \dots
-        \end{itemize}
-    }
-\end{frame}
-
-\begin{frame}
-\frametitle{Parallele Standardbibliotheken}
-    \begin{itemize}
-        \item Offensichtliche Parallelität in Map und Reduce
-        \item Eigener Namespace \texttt{std::\_\_parallel}
-    \end{itemize}
-\end{frame}
-
-%------------------------------------------------
 \section{Messergebnisse}
 
 \begin{frame}
-\setcounter{subsection}{1}
 \tableofcontents[currentsection]
 \end{frame}
 %------------------------------------------------
 
+\setcounter{subsection}{1}
+
 \begin{frame}
-\frametitle{Quellen}
-\printbibliography
+\frametitle{Speedup I}
+    \begin{figure}
+    \centering
+    \includegraphics[height=.8\textheight]{speedup_desktop.pdf}
+    \end{figure}
 \end{frame}
 
-% \begin{thebibliography}{99}
-% \bibitem[Flynn 1966]{flynn1966very} Michael J Flynn (1966)
-% \newblock Very high-speed computing systems
-% \newblock \emph{Proceedings of the IEEE} 54.12, S. 1901--1909
-% \bibitem[Dean and Ghemawat 2004]{dean2004} Jeffrey Dean and Sanjay Ghemawat 2004
-% \newblock MapReduce: Simplified Data Processing on Large Clusters
-% \newblock \emph{6th Symposium on Operating System Design and Implementation, 2004}
-% \end{thebibliography}
+\begin{frame}
+\frametitle{Speedup II}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{speedup_sub1000_desktop.pdf}
+        \caption{< 1000 Dateien}
+    \end{figure}
 
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{speedup_1000_desktop.pdf}
+        \caption{1000 Dateien}
+    \end{figure}
+\end{columns}
+\end{frame}
 
+\begin{frame}
+\frametitle{CPU Auslastung}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{cpu_util_sub1000_desktop.pdf}
+        \caption{< 1000 Dateien}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{cpu_util_1000_desktop.pdf}
+        \caption{1000 Dateien}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Effizienz}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{efficiency_sub1000_desktop.pdf}
+        \caption{< 1000 Dateien}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{efficiency_1000_desktop.pdf}
+        \caption{1000 Dateien}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Paralleler Overhead}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{parallel_overhead_sub1000_desktop.pdf}
+        \caption{< 1000 Dateien}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{parallel_overhead_1000_desktop.pdf}
+        \caption{1000 Dateien}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kosten}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{cost_sub1000_desktop.pdf}
+        \caption{< 1000 Dateien}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{cost_1000_desktop.pdf}
+        \caption{1000 Dateien}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cache Hit-Rate}
+    \begin{figure}
+    \centering
+    \includegraphics[height=.8\textheight]{cache_hit_rate.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Durchsatz/Dateien}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{throughput_files_cpp_desktop.pdf}
+        \caption{\C++}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{throughput_files_haskell_desktop.pdf}
+        \caption{Haskell}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Durchsatz/Threads}
+\begin{columns}[c]
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{throughput_threads_1000_cpp_desktop.pdf}
+        \caption{\C++}
+    \end{figure}
+
+\column{.5\textwidth}
+    \begin{figure}
+        \includegraphics[width=\textwidth]{throughput_threads_1000_haskell_desktop.pdf}
+        \caption{Haskell}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Durchschnittliche RSS}
+    \begin{figure}
+    \centering
+    \includegraphics[height=.8\textheight]{average_rss_desktop.pdf}
+    \end{figure}
+\end{frame}
+
+%------------------------------------------------
 \begin{frame}
 \centering
 \Huge{Vielen Dank für Eure Aufmerksamkeit}
 \end{frame}
-
 %------------------------------------------------
 
 \end{document} 
